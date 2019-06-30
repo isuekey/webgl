@@ -1,0 +1,8 @@
+{
+  "name": "cubehome",
+  "version": "1.0.0",
+  "description": "giant cube home",
+  "main": "index.js",
+  "license": "MIT",
+  "private": true
+}
