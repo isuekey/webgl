@@ -88,8 +88,8 @@ class MyScene {
     const position = [0, 0, 4];
     this.camera.position.set(...position);
     this.cameraDistance = Math.sqrt(position.reduce((sum, cur) => sum + cur * cur));
-    this.mpaUrl = '../src/nx.png';
-    this.backgroundUrl = '../src/back2.jpeg';
+    this.mpaUrl = './src/nx.png';
+    this.backgroundUrl = './src/back2.jpeg';
     this.lon = 0;
     this.lat = 0;
     this.phi = 0;
