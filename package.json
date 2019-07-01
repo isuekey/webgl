@@ -2,7 +2,11 @@
   "name": "cubehome",
   "version": "1.0.0",
   "description": "giant cube home",
-  "main": "index.js",
+  "main": "src/index.js",
   "license": "MIT",
-  "private": true
+  "private": true,
+  "dependencies": {
+    "three": "^0.106.2",
+    "webpack": "^4.35.0"
+  }
 }
