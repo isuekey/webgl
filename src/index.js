@@ -145,6 +145,7 @@ class MyScene {
       this.scene.add(cube);
       // this.camera.position.z = 0;
       document.addEventListener('mousedown', this.onDocumentMouseDown.bind(this), false);
+      document.addEventListener('touchstart', this.onDocumentTouchStart.bind(this), false);
       document.addEventListener('wheel', this.onDocumentMouseWheel.bind(this), false);
 
       window.addEventListener('resize', this.onWindowResized.bind(this), false);
@@ -169,6 +170,27 @@ class MyScene {
     document.addEventListener( 'mouseup', this.onDocumentMouseUp.bind(this), false );
   }
 
+  onDocumentTouchStart(touchEvent) {
+    touchEvent.preventDefault();
+    const event = touchEvent.touches[touchEvent.touches.length - 1];
+    this.onPointerDownPointerX = event.clientX;
+    this.onPointerDownPointerY = event.clientY;
+    this.onPointerDownLon = this.lon;
+    this.onPointerDownLat = this.lat;
+    document.addEventListener( 'touchmove', this.onDocumentTouchMove.bind(this), false );
+    document.addEventListener( 'touchleave', this.onDocumentMouseUp.bind(this), false );
+  }
+  onDocumentTouchMove( touchEvent ) {
+    const event = touchEvent.touches[touchEvent.touches.length - 1];
+    this.lon = ( event.clientX - this.onPointerDownPointerX ) * 0.1 + this.onPointerDownLon;
+    this.lat = ( event.clientY - this.onPointerDownPointerY ) * 0.1 + this.onPointerDownLat;
+  }
+
+  onDocumentTouchLeave() {
+    document.removeEventListener( 'touchmove', this.onDocumentTouchMove.bind(this), false );
+    document.removeEventListener( 'touchleave', this.onDocumentTouchLeave.bind(this), false );
+  }
+
   onDocumentMouseMove( event ) {
     this.lon = ( event.clientX - this.onPointerDownPointerX ) * 0.1 + this.onPointerDownLon;
     this.lat = ( event.clientY - this.onPointerDownPointerY ) * 0.1 + this.onPointerDownLat;
@@ -177,7 +199,6 @@ class MyScene {
   onDocumentMouseUp() {
     document.removeEventListener( 'mousemove', this.onDocumentMouseMove.bind(this), false );
     document.removeEventListener( 'mouseup', this.onDocumentMouseUp.bind(this), false );
-
   }
 
   onDocumentMouseWheel( event ) {
