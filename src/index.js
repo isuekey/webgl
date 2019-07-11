@@ -4,6 +4,9 @@ import * as three from '../node_modules/three/build/three.module.js';
 import appCss from './app.css';
 import back from './back2.jpeg';
 import nx from './nx.png';
+import gcb from './coin_back.png';
+import gcbd from './coin_border.jpg';
+import gcf from './coin_front.png';
 
 
 class CubeMapGenerator {
@@ -90,7 +93,7 @@ class MyScene {
     this.cubeCamera2 = this.initCubeCamera(this.scene);
     this.camera =  new three.PerspectiveCamera(60, window.innerWidth/window.innerHeight, 
       1, 1000);
-    const position = [0, 0, 4];
+    const position = [0, 0, 10];
     this.camera.position.set(...position);
     this.cameraDistance = Math.sqrt(position.reduce((sum, cur) => sum + cur * cur));
     this.mpaUrl = nx;
@@ -106,7 +109,7 @@ class MyScene {
     this.onPointerDownLat=0;
   }
   initCubeCamera(scene) {
-    const cubeCamera = new three.CubeCamera(1, 1000, 256);
+    const cubeCamera = new three.CubeCamera(3, 1000, 256);
     cubeCamera.renderTarget.texture.generateMipmaps = true;
     cubeCamera.renderTarget.texture.minFilter = three.LinearMipMapLinearFilter;
     scene.add(cubeCamera);
@@ -121,8 +124,10 @@ class MyScene {
   
   begin() {
     const loadBackground = this.loadTexture(back);
-    const loadCubeTexture = this.loadTexture(nx);
-    return Promise.all([loadBackground, loadCubeTexture]).then(textureArray => {
+    const loadCubeTexture = this.loadTexture(gcb);
+    const loadBorderTexture = this.loadTexture(gcbd);
+    const loadFrontTexture = this.loadTexture(gcf);
+    return Promise.all([loadBackground, loadCubeTexture, loadBorderTexture, loadFrontTexture]).then(textureArray => {
       const backgroundTexture = textureArray[0];
       const options = {
         resolution: 1024,
@@ -137,9 +142,12 @@ class MyScene {
       cubeTexure.wrapS = three.RepeatWrapping;
       cubeTexure.wrapT = three.RepeatWrapping;
 
-      const material = new three.MeshBasicMaterial({map: cubeTexure});
-      const geometry = new three.BoxGeometry(1, 1, 1);
-      const cube = new three.Mesh(geometry, material);
+      const backMaterial = new three.MeshBasicMaterial({map: cubeTexure});
+      const borderMaterial = new three.MeshBasicMaterial({map: textureArray[2]});
+      const frontMaterial = new three.MeshBasicMaterial({map: textureArray[3]});
+      // const geometry = new three.BoxGeometry(1, 1, 1);
+      const geometry = new three.CylinderBufferGeometry(5, 5, 1, 64);
+      const cube = new three.Mesh(geometry, [borderMaterial, frontMaterial, backMaterial]);
       cube.rotation.x = Math.PI/ 5;
       cube.rotation.y = Math.PI/ 5;
       this.scene.add(cube);
