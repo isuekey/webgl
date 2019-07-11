@@ -5,7 +5,7 @@ import appCss from './app.css';
 import back from './back2.jpeg';
 import nx from './nx.png';
 import gcb from './coin_back.png';
-import gcbd from './coin_border.jpg';
+import gcbd from './coin_border.png';
 import gcf from './coin_front.png';
 
 
