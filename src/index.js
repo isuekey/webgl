@@ -82,7 +82,7 @@ class CubeMapGenerator {
 
 class MyScene {
   constructor() {
-    this.renderer = new three.WebGLRenderer();
+    this.renderer = new three.WebGLRenderer({antialias:true});
     this.renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(this.renderer.domElement);
 
@@ -93,7 +93,7 @@ class MyScene {
     this.cubeCamera2 = this.initCubeCamera(this.scene);
     this.camera =  new three.PerspectiveCamera(60, window.innerWidth/window.innerHeight, 
       1, 1000);
-    const position = [0, 0, 10];
+    const position = [0, 0, 20];
     this.camera.position.set(...position);
     this.cameraDistance = Math.sqrt(position.reduce((sum, cur) => sum + cur * cur));
     this.mpaUrl = nx;
@@ -148,8 +148,8 @@ class MyScene {
       // const geometry = new three.BoxGeometry(1, 1, 1);
       const geometry = new three.CylinderBufferGeometry(5, 5, 1, 64);
       const cube = new three.Mesh(geometry, [borderMaterial, frontMaterial, backMaterial]);
-      cube.rotation.x = Math.PI/ 5;
-      cube.rotation.y = Math.PI/ 5;
+      cube.rotation.x = Math.PI/ 3;
+      cube.rotation.y = Math.PI/ 2;
       this.scene.add(cube);
       // this.camera.position.z = 0;
       document.addEventListener('mousedown', this.onDocumentMouseDown.bind(this), false);
@@ -227,46 +227,11 @@ class MyScene {
     this.phi = three.Math.degToRad( 90 - this.lat );
     this.theta = three.Math.degToRad( this.lon );
 
-    // this.cube.position.x = Math.cos( time * 0.001 ) * 30;
-    // this.cube.position.y = Math.sin( time * 0.001 ) * 30;
-    // this.cube.position.z = Math.sin( time * 0.001 ) * 30;
-
-    // this.cube.rotation.x += 0.02;
-    // this.cube.rotation.y += 0.03;
-
-    // this.torus.position.x = Math.cos( time * 0.001 + 10 ) * 30;
-    // this.torus.position.y = Math.sin( time * 0.001 + 10 ) * 30;
-    // this.torus.position.z = Math.sin( time * 0.001 + 10 ) * 30;
-
-    // this.torus.rotation.x += 0.02;
-    // this.torus.rotation.y += 0.03;
-    // console.log('this.cameraDistance', this.cameraDistance);
-
     this.camera.position.x = this.cameraDistance * Math.sin( this.phi ) * Math.cos( this.theta );
     this.camera.position.y = this.cameraDistance * Math.cos( this.phi );
     this.camera.position.z = this.cameraDistance * Math.sin( this.phi ) * Math.sin( this.theta );
 
     this.camera.lookAt( this.scene.position );
-
-    // this.sphere.visible = false;
-
-    // pingpong
-
-    // if ( this.count % 2 === 0 ) {
-
-    //   this.material.envMap = this.cubeCamera1.renderTarget.texture;
-    //   this.cubeCamera2.update( this.renderer, this.scene );
-
-    // } else {
-
-    //   this.material.envMap = this.cubeCamera2.renderTarget.texture;
-    //   this.cubeCamera1.update( this.renderer, this.scene );
-
-    // }
-
-    // this.count ++;
-
-    // this.sphere.visible = true;
 
     this.renderer.render( this.scene, this.camera );
 
