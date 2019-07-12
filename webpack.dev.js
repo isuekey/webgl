@@ -8,18 +8,5 @@ module.exports = merge(common, {
   },
   output: {
     publicPath:'/'
-  },
-  module: {
-    rules:[{
-     test:/\.(png|svg|jpg|gif|jpeg)$/,
-     use:[
-        {
-          loader:'file-loader',
-        }
-      ]
-  //   },{
-  //     test: /\.js$/,
-  //     loader: 'babel-loader'
-    }]
   }
 });

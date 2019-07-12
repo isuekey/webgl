@@ -3,7 +3,6 @@ import * as three from '../node_modules/three/build/three.module.js';
 
 import appCss from './app.css';
 import back from './back2.jpeg';
-import nx from './nx.png';
 import gcb from './coin_back.jpg';
 import gcbd from './coin_border.png';
 import gcf from './coin_front.jpg';
@@ -96,7 +95,6 @@ class MyScene {
     const position = [0, 0, 20];
     this.camera.position.set(...position);
     this.cameraDistance = Math.sqrt(position.reduce((sum, cur) => sum + cur * cur));
-    this.mpaUrl = nx;
     this.backgroundUrl = back;
     this.lon = 0;
     this.lat = 0;
