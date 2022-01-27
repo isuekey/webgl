@@ -5,7 +5,7 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "three": "^0.106.2",
+    "three": "^0.137.0",
     "webpack": "^4.35.2"
   },
   "scripts": {
